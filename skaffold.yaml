@@ -1,0 +1,20 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: understanding-microservices
+build:
+  artifacts:
+    - image: equationalapplication/birdsquawk
+      context: BirdSquawk-Service
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:v1
+    - image: equationalapplication/front-end
+      context: front-end
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:v1
+deploy:
+  kubectl:
+    manifests:
+      - config/k8s/birdsquawk_depl.yml
+      - config/k8s/birdsquawk_mongo_depl.yml
+      - config/k8s/front-end-depl.yml

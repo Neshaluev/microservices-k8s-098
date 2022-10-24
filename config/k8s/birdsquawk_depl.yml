@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: birdsquawk-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: birdsquawk
+  template:
+    metadata:
+      labels:
+        app: birdsquawk
+    spec:
+      containers:
+        - name: birdsquawk
+          image: equationalapplication/birdsquawk:latest
+          imagePullPolicy: Never
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: birdsquawk-service
+spec:
+  selector:
+    app: birdsquawk
+  ports:
+    - name: birdsquawk
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
